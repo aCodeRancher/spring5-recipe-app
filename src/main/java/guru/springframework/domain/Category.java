@@ -1,7 +1,6 @@
 package guru.springframework.domain;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -11,9 +10,12 @@ import java.util.Set;
 /**
  * Created by jt on 6/13/17.
  */
-@Data
+//@Data
 @EqualsAndHashCode(exclude = {"recipes"})
 @Entity
+@Setter
+@Getter
+@NoArgsConstructor
 public class Category {
 
     @Id
