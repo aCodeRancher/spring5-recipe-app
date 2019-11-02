@@ -45,9 +45,7 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public Recipe findById(Long l) {
-        if (!NumberUtils.isDigits(l.toString())){
-            throw new WrongFormatException("ID is not a number " + l.toString());
-        }
+
         Optional<Recipe> recipeOptional = recipeRepository.findById(l);
 
         if (!recipeOptional.isPresent()) {

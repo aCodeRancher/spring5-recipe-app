@@ -67,7 +67,7 @@ public class RecipeControllerTest {
     @Test
     public void testGetRecipeWrongIDFormat() throws Exception {
 
-        when(recipeService.findById(anyLong())).thenThrow(WrongFormatException.class);
+       // when(recipeService.findById(anyLong())).thenThrow(WrongFormatException.class);
 
         mockMvc.perform(get("/recipe/a/show"))
                 .andExpect(status().isBadRequest())

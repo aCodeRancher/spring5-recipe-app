@@ -5,6 +5,7 @@ import guru.springframework.exceptions.NotFoundException;
 import guru.springframework.exceptions.WrongFormatException;
 import guru.springframework.services.RecipeService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,7 +27,9 @@ public class RecipeController {
 
     @GetMapping("/recipe/{id}/show")
     public String showById(@PathVariable String id, Model model){
-
+        if (!NumberUtils.isDigits(id)){
+            throw new WrongFormatException("ID is not a number " + id);
+        }
         model.addAttribute("recipe", recipeService.findById(new Long(id)));
 
         return "recipe/show";
