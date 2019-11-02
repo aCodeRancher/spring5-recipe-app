@@ -5,10 +5,13 @@ import guru.springframework.converters.RecipeCommandToRecipe;
 import guru.springframework.converters.RecipeToRecipeCommand;
 import guru.springframework.domain.Recipe;
 import guru.springframework.exceptions.NotFoundException;
+import guru.springframework.exceptions.WrongFormatException;
 import guru.springframework.repositories.RecipeRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -42,12 +45,15 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public Recipe findById(Long l) {
-
+        if (!NumberUtils.isDigits(l.toString())){
+            throw new WrongFormatException("ID is not a number " + l.toString());
+        }
         Optional<Recipe> recipeOptional = recipeRepository.findById(l);
 
         if (!recipeOptional.isPresent()) {
             throw new NotFoundException("Recipe Not Found. For ID value: " + l.toString() );
         }
+
 
         return recipeOptional.get();
     }

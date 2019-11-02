@@ -3,6 +3,7 @@ package guru.springframework.controllers;
 import guru.springframework.commands.RecipeCommand;
 import guru.springframework.domain.Recipe;
 import guru.springframework.exceptions.NotFoundException;
+import guru.springframework.exceptions.WrongFormatException;
 import guru.springframework.services.RecipeService;
 import org.junit.Before;
 import org.junit.Test;
@@ -63,6 +64,15 @@ public class RecipeControllerTest {
                 .andExpect(view().name("404error"));
     }
 
+    @Test
+    public void testGetRecipeWrongIDFormat() throws Exception {
+
+        when(recipeService.findById(anyLong())).thenThrow(WrongFormatException.class);
+
+        mockMvc.perform(get("/recipe/a/show"))
+                .andExpect(status().isBadRequest())
+                .andExpect(view().name("400error"));
+    }
     @Test
     public void testGetNewRecipeForm() throws Exception {
         RecipeCommand command = new RecipeCommand();
